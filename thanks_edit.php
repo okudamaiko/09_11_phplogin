@@ -44,10 +44,10 @@ if ($status == false) {
 </head>
 
 <body>
-  <form action="todo_update.php" method="POST">
+  <form action="thanks_update.php" method="POST">
     <fieldset>
       <legend>DB連携型todoリスト（編集画面）</legend>
-      <a href="todo_read.php">一覧画面</a>
+      <a href="mypage.php">一覧画面</a>
       <div>
         todo: <input type="text" name="todo" value="<?= $record["todo"] ?>">
       </div>

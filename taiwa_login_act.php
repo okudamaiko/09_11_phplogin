@@ -28,14 +28,15 @@ if ($status == false) {
     $val = $stmt->fetch(PDO::FETCH_ASSOC);
     if (!$val) {
         echo "<p>ログイン情報に誤りがあります</p>";
-        echo '<a href="todo_login.php">login</a>';
+        echo '<a href="taiwa_login.php">ログイン</a>';
         exit();
     } else {
         $_SESSION = array();
         $_SESSION["session_id"] = session_id();
         $_SESSION["is_admin"] = $val["is_admin"];
+        $_SESSION["id"] = $val["id"];
         $_SESSION["username"] = $val["username"];
-        header("Location:todo_read.php");
+        header("Location:mypage.php");
         exit();
     }
 }

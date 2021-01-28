@@ -33,7 +33,7 @@ if ($stmt->fetchColumn() > 0) {
   // usernameが1件以上該当した場合はエラーを表示して元のページに戻る
   // $count = $stmt->fetchColumn();
   echo "<p>すでに登録されているユーザです．</p>";
-  echo '<a href="todo_login.php">login</a>';
+  echo '<a href="taiwa_login.php">login</a>';
   exit();
 }
 
@@ -55,6 +55,6 @@ if ($status == false) {
   exit();
 } else {
   // 正常にSQLが実行された場合は入力ページファイルに移動し，入力ページの処理を実行する
-  header("Location:todo_login.php");
+  header("Location:taiwa_login.php");
   exit();
 }

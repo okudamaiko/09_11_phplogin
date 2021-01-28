@@ -10,15 +10,15 @@ check_session_id();
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DB連携型todoリスト（入力画面）</title>
+  <title>ありがとうポイント入力画面</title>
 </head>
 
 <body>
-  <form action="todo_create.php" method="POST">
+  <form action="thanks_create.php" method="POST">
     <fieldset>
-      <legend>DB連携型todoリスト（入力画面）</legend>
-      <a href="todo_read.php">一覧画面</a>
-      <a href="todo_logout.php">logout</a>
+      <legend>ありがとうポイント入力画面</legend>
+      <a href="mypage.php">MYPAGE（対話一覧）</a>
+      <a href="taiwa_logout.php">ログアウト</a>
       <div>
         todo: <input type="text" name="todo">
       </div>

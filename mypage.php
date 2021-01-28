@@ -1,27 +1,28 @@
 <?php
-
 session_start();
-include('functions.php');
+include("functions.php");
+check_session_id();
+
+$username = $_SESSION['username'];
+$user_id = $_SESSION['id'];
 
 // DB接続
 $pdo = connect_to_db();
-$username = $_POST['username'];
-$todo = $_POST['todo'];
-$deadline = $_POST['deadline'];
 
-// データ取得SQL作成
-$sql =
-  'SELECT * FROM todo_table 
-  WHERE username = :username ';
+$sql = 'SELECT event_table.event_name, event_table.event_date, users_table.id,
+event_table.user1_id, event_table.user2_id, event_table.user3_id
+FROM event_table, users_table
+WHERE ((:id = users_table.id)
+AND  (users_table.id = event_table.user1_id
+OR    users_table.id = event_table.user2_id
+OR    users_table.id = event_table.user3_id))
+ORDER BY event_table.event_date desc';
 
 // SQL準備&実行
 
 $stmt = $pdo->prepare($sql);
-$stmt->bindValue(':username', $username, PDO::PARAM_STR);
-$stmt->bindValue(':todo', $todo, PDO::PARAM_STR);
-$stmt->bindValue(':deadline', $deadline, PDO::PARAM_STR);
+$stmt->bindValue(':id', $id, PDO::PARAM_INT);
 $status = $stmt->execute();
-
 
 // データ登録処理後
 if ($status == false) {
@@ -30,6 +31,7 @@ if ($status == false) {
   echo json_encode(["error_msg" => "{$error[2]}"]);
   exit();
 } else {
+
   // 正常にSQLが実行された場合は入力ページファイルに移動し，入力ページの処理を実行する
   // fetchAll()関数でSQLで取得したレコードを配列で取得できる
   $result = $stmt->fetchAll(PDO::FETCH_ASSOC);  // データの出力用変数（初期値は空文字）を設定
@@ -38,18 +40,21 @@ if ($status == false) {
   // `.=`は後ろに文字列を追加する，の意味
   foreach ($result as $record) {
     $output .= "<tr>";
-    $output .= "<td>{$record["deadline"]}</td>";
-    $output .= "<td>{$record["todo"]}</td>";
+    $output .= "<td>{$record["event_name"]}</td>";
+    $output .= "<td>{$record["event_date"]}</td>";
+    $output .= "<td>{$record["user1_id"]}</td>";
+    $output .= "<td>{$record["user2_id"]}</td>";
+    $output .= "<td>{$record["user3_id"]}</td>";
+
     // edit deleteリンクを追加
-    $output .= "<td><a href='todo_edit.php?id={$record["id"]}'>edit</a></td>";
-    $output .= "<td><a href='todo_delete.php?id={$record["id"]}'>delete</a></td>";
+    $output .= "<td><a href='thanks_edit.php?id={$record["id"]}'>入力</a></td>";
+    // $output .= "<td><a href='thanks_delete.php?id={$record["id"]}'>delete</a></td>";
     $output .= "</tr>";
   }
   // $valueの参照を解除する．解除しないと，再度foreachした場合に最初からループしない
   // 今回は以降foreachしないので影響なし
   unset($value);
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -58,22 +63,22 @@ if ($status == false) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DB連携型todoリスト（一覧画面）</title>
+  <title>MYPAGE（一覧画面）</title>
 </head>
 
 <body>
   <fieldset>
-    <legend>DB連携型todoリスト（一覧画面）</legend>
-    <a href="todo_input.php">入力画面</a>
-    <a href="todo_logout.php">logout</a>
-
+    <legend>MYPAGE（一覧画面）</legend>
+    <a href="thanks_input.php">入力画面</a>
+    <a href="taiwa_logout.php">logout</a>
     <table>
       <thead>
+        <th>username<?php echo "<p> $username </p>" ?></th>
+        <th>user_id<?php echo "<p> $user_id </p>" ?></th>
         <tr>
-          <th>username<?php echo "<p> $username </p>" ?></th>
-          <th>deadline</th>
-          <th>todo</th>
-          <th></th>
+          <th>対話</th>
+          <th>日時</th>
+          <th>参加者</th>
           <th></th>
         </tr>
       </thead>

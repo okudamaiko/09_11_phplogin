@@ -1,24 +1,30 @@
 <?php
 
+
+
 // 送信データのチェック
-// var_dump($_GET);
+// var_dump($_POST);
 // exit();
+
 // 関数ファイルの読み込み
 
 session_start();
 include('functions.php');
 check_session_id();
-
 // 送信データ受け取り
-$id = $_GET["id"];
+$todo = $_POST["todo"];
+$deadline = $_POST["deadline"];
+$id = $_POST["id"];
 
 // DB接続
 $pdo = connect_to_db();
 
-// DELETE文を作成&実行
-$sql = "DELETE FROM todo_table WHERE id=:id";
+// UPDATE文を作成&実行
+$sql = "UPDATE todo_table SET todo=:todo, deadline=:deadline, updated_at=sysdate() WHERE id=:id";
 
 $stmt = $pdo->prepare($sql);
+$stmt->bindValue(':todo', $todo, PDO::PARAM_STR);
+$stmt->bindValue(':deadline', $deadline, PDO::PARAM_STR);
 $stmt->bindValue(':id', $id, PDO::PARAM_INT);
 $status = $stmt->execute();
 
@@ -30,6 +36,6 @@ if ($status == false) {
   exit();
 } else {
   // 正常にSQLが実行された場合は一覧ページファイルに移動し，一覧ページの処理を実行する
-  header("Location:todo_read.php");
+  header("Location:mypage.php");
   exit();
 }
