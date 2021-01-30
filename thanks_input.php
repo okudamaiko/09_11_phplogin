@@ -20,10 +20,10 @@ check_session_id();
       <a href="mypage.php">MYPAGE（対話一覧）</a>
       <a href="taiwa_logout.php">ログアウト</a>
       <div>
-        todo: <input type="text" name="todo">
+        参加者１: <input type="text" name="todo">
       </div>
       <div>
-        deadline: <input type="date" name="deadline">
+        参加者２: <input type="date" name="deadline">
       </div>
       <div>
         <button>submit</button>

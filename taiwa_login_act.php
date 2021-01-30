@@ -4,6 +4,7 @@
 
 session_start();
 include('functions.php');
+check_session_id();
 
 $pdo = connect_to_db();
 $username = $_POST['username'];
@@ -34,7 +35,7 @@ if ($status == false) {
         $_SESSION = array();
         $_SESSION["session_id"] = session_id();
         $_SESSION["is_admin"] = $val["is_admin"];
-        $_SESSION["id"] = $val["id"];
+        $_SESSION["user_id"] = $val["id"];
         $_SESSION["username"] = $val["username"];
         header("Location:mypage.php");
         exit();

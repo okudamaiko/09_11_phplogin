@@ -40,19 +40,22 @@ if ($status == false) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DB連携型todoリスト（編集画面）</title>
+  <title>ありがとうポイント（入力・編集画面）</title>
 </head>
 
 <body>
   <form action="thanks_update.php" method="POST">
     <fieldset>
-      <legend>DB連携型todoリスト（編集画面）</legend>
+      <legend>ありがとうポイント（入力・編集画面）</legend>
       <a href="mypage.php">一覧画面</a>
       <div>
-        todo: <input type="text" name="todo" value="<?= $record["todo"] ?>">
+        参加者１: <input type="text" name="todo" value="<?= $record["todo"] ?>">
       </div>
       <div>
-        deadline: <input type="date" name="deadline" value="<?= $record["deadline"] ?>">
+        参加者２: <input type="date" name="deadline" value="<?= $record["deadline"] ?>">
+      </div>
+      <div>
+        参加者３: <input type="date" name="deadline" value="<?= $record["deadline"] ?>">
       </div>
       <div>
         <button>submit</button>
